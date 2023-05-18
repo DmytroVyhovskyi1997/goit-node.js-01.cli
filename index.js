@@ -1,5 +1,17 @@
 const contacts = require('./contacts');
 console.log(contacts)
+const { Command } = require("commander");
+const program = new Command();
+program
+  .option("-a, --action <type>", "choose action")
+  .option("-i, --id <type>", "user id")
+  .option("-n, --name <type>", "user name")
+  .option("-e, --email <type>", "user email")
+  .option("-p, --phone <type>", "user phone");
+
+program.parse(process.argv);
+
+const argv = program.opts();
 
 const  invokeAction = async ({action, id, name, email, phone}) => {
 switch(action){
@@ -26,7 +38,4 @@ return console.log(remove)
 }
 }
 
-// invokeAction({action:'list'});
-// invokeAction({action:'get'});
-// invokeAction({action:'add', name:"Kennedy Lane", email:"nulla.ante@vestibul.co.uk", phone:"(992) 914-3792"});
-invokeAction({action:'remove'});
+invokeAction(argv);
